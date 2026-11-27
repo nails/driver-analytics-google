@@ -2,7 +2,7 @@
 
 namespace Nails\Analytics\Driver\Google\Settings;
 
-use Nails\Admin\Traits;
+use Nails\Analytics\Driver\Google\Admin\Permission;
 use Nails\Common\Helper\Form;
 use Nails\Common\Interfaces;
 use Nails\Components\Setting;
@@ -11,10 +11,6 @@ use Nails\Factory;
 
 class Google implements Interfaces\Component\Settings
 {
-    use Traits\Settings\Permission;
-
-    // --------------------------------------------------------------------------
-
     const KEY_PROFILE_ID   = 'profile_id';
     const KEY_AD_WORDS_ID  = 'ad_words_id';
     const KEY_ENVIRONMENTS = 'environments';
@@ -34,9 +30,9 @@ class Google implements Interfaces\Component\Settings
     /**
      * @inheritDoc
      */
-    public function getPermissions(): array
+    public function getPermission(): string
     {
-        return [];
+        return Permission\Settings\Google::class;
     }
 
     // --------------------------------------------------------------------------
@@ -46,10 +42,6 @@ class Google implements Interfaces\Component\Settings
      */
     public function get(): array
     {
-        if (!$this->userHasPermission()) {
-            return [];
-        }
-
         /** @var Setting $oProfileId */
         $oProfileId = Factory::factory('ComponentSetting');
         $oProfileId
